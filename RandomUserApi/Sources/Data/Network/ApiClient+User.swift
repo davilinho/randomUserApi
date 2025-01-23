@@ -9,6 +9,7 @@ import Foundation
 
 struct UserResponse: Codable {
     let results: [User]
+    let info: Info
 
     static func get(page: Int, seed: String? = nil) throws -> Resource<UserResponse> {
         guard let url = try URL.fetch(page: page, seed: seed ?? generateRandomSeek), page > 0 else {

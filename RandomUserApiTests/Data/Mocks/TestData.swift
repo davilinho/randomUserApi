@@ -23,7 +23,7 @@ let expectedUser = User(name: User.Name(title: "Mr",
                         phone: "1234567890",
                         picture: nil)
 
-let expectedUserResponse = UserResponse(results: [expectedUser])
+let expectedUserResponse = UserResponse(results: [expectedUser], info: Info(seed: "3213112", results: 1, page: 1, version: "1.2"))
 
 nonisolated(unsafe) let expectedBlacklistEntity = UserEntity(id: "999",
                                                              name: "Black",

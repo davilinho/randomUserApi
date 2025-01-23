@@ -11,6 +11,8 @@ import SwiftUI
 @Observable
 class ContentViewModel {
     private var useCase: ListUsersUseCase
+    private var nextPage: Int = 1
+    private var seed: String?
 
     var viewState: ViewState = .loading
     var usersResponse: UserEntityResponse = UserEntityResponse(entities: []) {
@@ -32,6 +34,21 @@ class ContentViewModel {
         do {
             self.viewState = .loading
             self.usersResponse = try await self.useCase.fetchUsers(page: 1, seed: nil)
+        } catch {
+            self.viewState = .error
+        }
+    }
+
+    func fetchNextPage() async {
+        do {
+            if let page = self.usersResponse.info?.page {
+                self.nextPage = page + 1
+            }
+            self.seed = self.usersResponse.info?.seed
+
+            let response = try await self.useCase.fetchUsers(page: self.nextPage, seed: self.seed)
+
+            self.usersResponse.entities.append(contentsOf: response.entities)
         } catch {
             self.viewState = .error
         }

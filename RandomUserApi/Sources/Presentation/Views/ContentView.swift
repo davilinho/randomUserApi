@@ -19,22 +19,14 @@ struct ContentView: View {
                 case .loading:
                     LoadingView()
                 case .results:
-                    List {
-                        ForEach(viewModel.usersResponse.entities, id: \.id) { user in
-                            NavigationLink {
-                                Text("DETAIL -> \(user.name)")
-                            } label: {
-                                Text("\(user.surname), \(user.name)")
-                            }
-                        }
-                        //                .onDelete(perform: deleteItems)
-                    }
+                    ListUsersView()
                 case .empty:
                     Text("No results")
                 case .error:
                     Text("Error")
                 }
             }
+            .privacySensitive()
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -46,11 +38,18 @@ struct ContentView: View {
             }
             .searchable(text: .constant(""))
             .navigationTitle("Random User API")
+            .environment(viewModel)
         } detail: {
-
+            Text("Select a user to see more details")
+                .font(.title)
         }
         .task {
             await viewModel.fetchUsers()
+        }
+        .refreshable {
+            Task {
+                await viewModel.fetchUsers()
+            }
         }
     }
 
