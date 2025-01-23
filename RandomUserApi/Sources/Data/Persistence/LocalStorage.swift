@@ -19,10 +19,7 @@ class DefaultLocalStorage: LocalStorage {
     private let modelContext: ModelContext
 
     @MainActor
-    static let shared = DefaultLocalStorage()
-
-    @MainActor
-    private init() {
+    init() {
         self.modelContainer = try! ModelContainer(for: UserEntity.self,
                                                   configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         self.modelContext = self.modelContainer.mainContext

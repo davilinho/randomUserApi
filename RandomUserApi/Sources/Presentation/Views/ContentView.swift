@@ -6,23 +6,34 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @State private var users: [UserEntity] = []
+    @State private var viewModel = ContentViewModel()
 
     var body: some View {
+        @Bindable var viewModel = self.viewModel
+
         NavigationSplitView {
-            List {
-                ForEach(self.users, id: \.id) { user in
-                    NavigationLink {
-                        Text("DETAIL -> \(user.name)")
-                    } label: {
-                        Text("\(user.surname), \(user.name)")
+            ZStack {
+                switch viewModel.viewState {
+                case .loading:
+                    LoadingView()
+                case .results:
+                    List {
+                        ForEach(viewModel.usersResponse.entities, id: \.id) { user in
+                            NavigationLink {
+                                Text("DETAIL -> \(user.name)")
+                            } label: {
+                                Text("\(user.surname), \(user.name)")
+                            }
+                        }
+                        //                .onDelete(perform: deleteItems)
                     }
+                case .empty:
+                    Text("No results")
+                case .error:
+                    Text("Error")
                 }
-//                .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -39,13 +50,7 @@ struct ContentView: View {
 
         }
         .task {
-            do {
-                let resource = try UserResponse.get(page: 1)
-                let response = try await DefaultAPIClient().request(resource)
-                self.users = response.results.compactMap { $0.entity }
-            } catch {
-                print(error)
-            }
+            await viewModel.fetchUsers()
         }
     }
 

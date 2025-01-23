@@ -7,12 +7,14 @@
 
 import Foundation
 
-nonisolated(unsafe) let expectedUserEntity = UserEntity(id: "1",
+nonisolated(unsafe) var expectedUserEntity = UserEntity(id: "1",
                                                         name: "Test",
                                                         surname: "Surname",
                                                         email: "email@test.com",
                                                         phone: "1234567890",
                                                         pictureURL: "")
+
+nonisolated(unsafe) var expectedUserEntityResponse = UserEntityResponse(entities: [expectedUserEntity])
 
 let expectedUser = User(name: User.Name(title: "Mr",
                                         first: "Test",
