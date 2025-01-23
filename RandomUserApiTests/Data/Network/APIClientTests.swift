@@ -53,11 +53,6 @@ import Testing
     }
 }
 
-struct TestModel: Codable, Equatable {
-    let id: Int
-    let name: String
-}
-
 class MockURLSession: URLSessionProtocol {
     var mockData: Data?
     var mockResponse: URLResponse?
