@@ -18,14 +18,15 @@ class DefaultUsersUseCase: ListUsersUseCase, @unchecked Sendable {
 
     func fetchUsers(page: Int, seed: String?) async throws -> UserEntityResponse {
         let resource = try UserResponse.get(page: page, seed: seed)
-        let entities = try await self.repository.fetchUsers(resource).results
-            .compactMap { $0.entity }
+        let response = try await self.repository.fetchUsers(resource)
+        let entities = response.results.compactMap { $0.entity }
+        let info = response.info
 
         if entities.isEmpty {
             throw DomainError.notFound
         }
 
         let uniqueEntities = Array(Set(entities))
-        return await UserEntityResponse(entities: uniqueEntities)
+        return UserEntityResponse(entities: uniqueEntities, info: info)
     }
 }

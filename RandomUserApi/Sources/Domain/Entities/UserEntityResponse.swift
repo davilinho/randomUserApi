@@ -7,8 +7,10 @@
 
 class UserEntityResponse: @unchecked Sendable {
     var entities: [UserEntity] = []
+    var info: Info?
 
-    init(entities: [UserEntity]) {
+    init(entities: [UserEntity], info: Info? = nil) {
         self.entities = entities
+        self.info = info
     }
 }

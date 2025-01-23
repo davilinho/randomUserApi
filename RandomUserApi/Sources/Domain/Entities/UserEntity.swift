@@ -13,17 +13,25 @@ final class UserEntity: Hashable, Identifiable {
     @Attribute(.unique) var id: String
     var name: String
     var surname: String
-    var email: String
-    var phone: String
-    var pictureURL: String
+    var email: String?
+    var phone: String?
+    var pictureURL: String?
+    var thumbnailURL: String?
 
-    init(id: String, name: String, surname: String, email: String, phone: String, pictureURL: String) {
+    init(id: String,
+         name: String,
+         surname: String,
+         email: String? = nil,
+         phone: String? = nil,
+         pictureURL: String? = nil,
+         thumbnailURL: String? = nil) {
         self.id = id
         self.name = name
         self.surname = surname
         self.email = email
         self.phone = phone
         self.pictureURL = pictureURL
+        self.thumbnailURL = thumbnailURL
     }
 
     static func == (lhs: UserEntity, rhs: UserEntity) -> Bool {
@@ -33,13 +41,12 @@ final class UserEntity: Hashable, Identifiable {
 
 extension User {
     var entity: UserEntity {
-        .init(
-            id: UUID().uuidString,
-            name: self.name?.first ?? "",
-            surname: self.name?.last ?? "",
-            email: self.email ?? "",
-            phone: self.phone ?? "",
-            pictureURL: self.picture?.medium ?? ""
-        )
+        UserEntity(id: UUID().uuidString,
+                   name: self.name?.first ?? "",
+                   surname: self.name?.last ?? "",
+                   email: self.email,
+                   phone: self.phone,
+                   pictureURL: self.picture?.medium,
+                   thumbnailURL: self.picture?.thumbnail)
     }
 }
