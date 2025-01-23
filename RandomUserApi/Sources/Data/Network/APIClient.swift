@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIClient {
-    func request<T: Decodable & Sendable>(_ resource: Resource<T>) async throws -> T
+    func request<T>(_ resource: Resource<T>) async throws -> T where T : Decodable & Sendable
 }
 
 protocol URLSessionProtocol {
@@ -24,7 +24,7 @@ class DefaultAPIClient: APIClient {
         self.session = session
     }
 
-    func request<T: Decodable & Sendable>(_ resource: Resource<T>) async throws -> T {
+    func request<T>(_ resource: Resource<T>) async throws -> T where T : Decodable & Sendable {
         var request = URLRequest(url: resource.url)
         request.allHTTPHeaderFields = resource.headers
 
