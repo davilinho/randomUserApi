@@ -12,6 +12,7 @@ import Testing
 @Suite struct DefaultLocalStorageTests {
     let localStorage = MockLocalStorage()
 
+    @MainActor
     @Test func save() throws {
         // Arrange
         let user = expectedUserEntity
@@ -23,6 +24,7 @@ import Testing
         #expect(self.localStorage.saveCalled)
     }
 
+    @MainActor
     @Test func fetch() throws {
         // Arrange
         let user = expectedUserEntity
@@ -37,6 +39,7 @@ import Testing
         #expect(result.first?.name == user.name)
     }
 
+    @MainActor
     @Test func delete() throws {
         // Arrange
         let user = expectedUserEntity
@@ -48,6 +51,7 @@ import Testing
         #expect(self.localStorage.deleteCalled)
     }
 
+    @MainActor
     @Test func clear() throws {
         // Act
         try self.localStorage.clear()

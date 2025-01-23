@@ -7,29 +7,16 @@
 
 protocol UserRepository {
     func fetchUsers(_ resource: Resource<UserResponse>) async throws -> UserResponse
-    func fetchBlackListedUsers() throws -> [UserEntity]
-    func addToBlacklist(_ user: UserEntity) throws
 }
 
-class DefaultUserRepository: UserRepository {
+class DefaultUserRepository: @unchecked Sendable, UserRepository {
     private let apiClient: APIClient
-    private let localStorage: LocalStorage
 
-    @MainActor
-    init(apiClient: APIClient = DefaultAPIClient.shared, localStorage: LocalStorage = DefaultLocalStorage.shared) {
+    init(apiClient: APIClient = DefaultAPIClient()) {
         self.apiClient = apiClient
-        self.localStorage = localStorage
     }
 
     func fetchUsers(_ resource: Resource<UserResponse>) async throws -> UserResponse {
         try await self.apiClient.request(resource)
-    }
-
-    func fetchBlackListedUsers() throws -> [UserEntity] {
-        self.localStorage.fetch()
-    }
-
-    func addToBlacklist(_ user: UserEntity) throws {
-        try self.localStorage.save(user)
     }
 }

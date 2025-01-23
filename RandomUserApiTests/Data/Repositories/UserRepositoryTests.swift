@@ -34,47 +34,5 @@ import Testing
                 #expect(result.results.first?.name?.first == expectedUserResponse.results.first?.name?.first)
             }
         }
-
-        @MainActor
-        @Test func requestFetchBlackListedUsersReturnsDecodedData() async throws {
-            // Arrange
-            let expectedData = expectedUserEntity
-            let mockLocalStorage = DefaultLocalStorage.shared
-            try mockLocalStorage.clear()
-            try mockLocalStorage.save(expectedData)
-
-            let mockRepository = DefaultUserRepository(localStorage: mockLocalStorage)
-
-            Task {
-                // Act
-                let result = try mockRepository.fetchBlackListedUsers()
-
-                // Assert
-                #expect(result != nil)
-                #expect(result.count == 1)
-                #expect(result.first?.name == expectedUserEntity.name)
-            }
-        }
-
-        @MainActor
-        @Test func requestAddToBlacklist() async throws {
-            // Arrange
-            let expectedData = expectedBlacklistEntity
-            let mockLocalStorage = DefaultLocalStorage.shared
-            try mockLocalStorage.clear()
-
-            let mockRepository = DefaultUserRepository(localStorage: mockLocalStorage)
-            try mockRepository.addToBlacklist(expectedData)
-
-            Task {
-                // Act
-                let result = try mockRepository.fetchBlackListedUsers()
-
-                // Assert
-                #expect(result != nil)
-                #expect(result.count == 1)
-                #expect(result.first?.name == expectedUserEntity.name)
-            }
-        }
     }
 }

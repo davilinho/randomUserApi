@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class UserEntity: Identifiable {
+final class UserEntity: Hashable, Identifiable {
     @Attribute(.unique) var id: String
     var name: String
     var surname: String
@@ -24,6 +24,10 @@ final class UserEntity: Identifiable {
         self.email = email
         self.phone = phone
         self.pictureURL = pictureURL
+    }
+
+    static func == (lhs: UserEntity, rhs: UserEntity) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

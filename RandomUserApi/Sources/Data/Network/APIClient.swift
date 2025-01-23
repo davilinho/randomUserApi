@@ -19,11 +19,8 @@ extension URLSession: URLSessionProtocol {}
 
 let validStatus = 200...299
 
-class DefaultAPIClient: APIClient {
+final class DefaultAPIClient: APIClient, @unchecked Sendable {
     private let session: URLSessionProtocol
-
-    @MainActor
-    static var shared: DefaultAPIClient = .init()
 
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
@@ -63,10 +60,4 @@ struct Resource<T: Codable> {
     let url: URL
     var headers: [String: String] = ["Content-Type": "application/json"]
     var method: HttpMethod = .get
-}
-
-enum NetworkError: Error {
-    case invalidResponse
-    case badUrl
-    case decodingError
 }
