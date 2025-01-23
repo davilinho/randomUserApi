@@ -14,7 +14,7 @@ import Testing
 
     @Test func save() throws {
         // Arrange
-        let user = self.localStorage.expectedUserEntity
+        let user = expectedUserEntity
 
         // Act
         try self.localStorage.save(user)
@@ -25,7 +25,7 @@ import Testing
 
     @Test func fetch() throws {
         // Arrange
-        let user = self.localStorage.expectedUserEntity
+        let user = expectedUserEntity
 
         // Act
         let result: [UserEntity] = self.localStorage.fetch()
@@ -39,7 +39,7 @@ import Testing
 
     @Test func delete() throws {
         // Arrange
-        let user = self.localStorage.expectedUserEntity
+        let user = expectedUserEntity
 
         // Act
         try self.localStorage.delete(user)
@@ -47,16 +47,23 @@ import Testing
         // Assert
         #expect(self.localStorage.deleteCalled)
     }
+
+    @Test func clear() throws {
+        // Act
+        try self.localStorage.clear()
+
+        // Assert
+        #expect(self.localStorage.clearCalled)
+    }
 }
 
 // MARK: - Mock Classes
 
 class MockLocalStorage: LocalStorage {
-    let expectedUserEntity = UserEntity(id: "1", name: "Test", surname: "Surname", email: "email@test.com", phone: "1234567890", pictureURL: "")
-
     var saveCalled = false
     var fetchCalled = false
     var deleteCalled = false
+    var clearCalled = false
 
     func save<T>(_ value: T) throws where T : PersistentModel {
         self.saveCalled = true
@@ -64,7 +71,7 @@ class MockLocalStorage: LocalStorage {
 
     func fetch<T>() -> [T] where T : PersistentModel {
         self.fetchCalled = true
-        guard let response = [self.expectedUserEntity] as? [T] else {
+        guard let response = [expectedUserEntity] as? [T] else {
             return []
         }
         return response
@@ -72,5 +79,9 @@ class MockLocalStorage: LocalStorage {
 
     func delete<T>(_ value: T) throws where T : PersistentModel {
         self.deleteCalled = true
+    }
+
+    func clear() throws {
+        self.clearCalled = true
     }
 }

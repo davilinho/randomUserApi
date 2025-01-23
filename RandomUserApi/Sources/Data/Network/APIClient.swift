@@ -17,8 +17,13 @@ protocol URLSessionProtocol {
 
 extension URLSession: URLSessionProtocol {}
 
+let validStatus = 200...299
+
 class DefaultAPIClient: APIClient {
     private let session: URLSessionProtocol
+
+    @MainActor
+    static var shared: DefaultAPIClient = .init()
 
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
@@ -42,7 +47,7 @@ class DefaultAPIClient: APIClient {
 
         let (data, response) = try await self.session.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+              validStatus.contains(httpResponse.statusCode) else {
             throw NetworkError.invalidResponse
         }
 

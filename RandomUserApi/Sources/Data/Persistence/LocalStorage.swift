@@ -11,6 +11,7 @@ protocol LocalStorage {
     func save<T>(_ value: T) throws where T : PersistentModel
     func fetch<T>() -> [T] where T : PersistentModel
     func delete<T>(_ value: T) throws where T : PersistentModel
+    func clear() throws
 }
 
 class DefaultLocalStorage: LocalStorage {
@@ -24,7 +25,7 @@ class DefaultLocalStorage: LocalStorage {
     private init() {
         self.modelContainer = try! ModelContainer(for: UserEntity.self,
                                                   configurations: ModelConfiguration(isStoredInMemoryOnly: false))
-        self.modelContext = modelContainer.mainContext
+        self.modelContext = self.modelContainer.mainContext
     }
 
     func save<T>(_ value: T) throws where T : PersistentModel {
@@ -43,5 +44,9 @@ class DefaultLocalStorage: LocalStorage {
     func delete<T>(_ value: T) throws where T : PersistentModel {
         self.modelContext.delete(value)
         try self.modelContext.save()
+    }
+
+    func clear() throws {
+        try self.modelContext.delete(model: UserEntity.self)
     }
 }

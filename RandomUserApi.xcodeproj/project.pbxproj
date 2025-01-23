@@ -30,6 +30,23 @@
 		3992D79D2D41BAE80051F96A /* RandomUserApi.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RandomUserApi.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3992D7FA2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApi" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/Mocks/TestData.swift,
+			);
+			target = 3992D73B2D4135E40051F96A /* RandomUserApi */;
+		};
+		3992D7FB2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApiTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/Mocks/TestData.swift,
+			);
+			target = 3992D74D2D4135E60051F96A /* RandomUserApiTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3992D73E2D4135E40051F96A /* RandomUserApi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -38,6 +55,10 @@
 		};
 		3992D7512D4135E60051F96A /* RandomUserApiTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3992D7FA2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApi" target */,
+				3992D7FB2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApiTests" target */,
+			);
 			path = RandomUserApiTests;
 			sourceTree = "<group>";
 		};
