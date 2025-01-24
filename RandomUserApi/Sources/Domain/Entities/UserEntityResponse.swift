@@ -14,3 +14,13 @@ class UserEntityResponse: @unchecked Sendable {
         self.info = info
     }
 }
+
+extension Array where Element == UserEntity {
+    mutating func distinct() {
+        self = self.reduce(into: [UserEntity]()) { result, element in
+            if !result.contains(element) {
+                result.append(element)
+            }
+        }
+    }
+}

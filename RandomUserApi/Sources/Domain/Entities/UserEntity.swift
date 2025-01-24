@@ -35,7 +35,7 @@ final class UserEntity: Hashable, Identifiable {
     }
 
     static func == (lhs: UserEntity, rhs: UserEntity) -> Bool {
-        lhs.id == rhs.id
+        lhs.name == rhs.name && lhs.surname == rhs.surname && lhs.email == rhs.email
     }
 }
 
