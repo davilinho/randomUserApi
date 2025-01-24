@@ -54,12 +54,13 @@ class ContentViewModel {
 extension ContentViewModel {
     private func fetchNextPage() async throws {
         let response = try await self.useCase.fetchUsers(page: self.nextPage, seed: self.seed)
-        self.append(response.entities)
+        self.update(response.entities)
         self.update(response.info)
     }
 
-    private func append(_ users: [UserEntity]) {
+    private func update(_ users: [UserEntity]) {
         self.users.append(contentsOf: users)
+        self.users.distinct()
     }
 
     private func update(_ info: Info?) {
