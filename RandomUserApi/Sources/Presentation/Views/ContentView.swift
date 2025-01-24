@@ -43,13 +43,11 @@ struct ContentView: View {
             Text("Select a user to see more details")
                 .font(.title)
         }
-        .task {
-            await viewModel.fetchUsers()
+        .onAppear {
+            viewModel.fetchUsers()
         }
         .refreshable {
-            Task {
-                await viewModel.fetchUsers()
-            }
+            viewModel.fetchUsers()
         }
     }
 
