@@ -26,8 +26,16 @@ struct ListUsersView: View {
                         }
                 }
             }
-            //                .onDelete(perform: deleteItems)
+            .onDelete(perform: self.deleteItems)
         }
         .listStyle(.plain)
+    }
+
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                self.viewModel.addToBlacklist(self.viewModel.users[index])
+            }
+        }
     }
 }
