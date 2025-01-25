@@ -46,7 +46,7 @@ extension User {
                    surname: self.name?.last ?? "",
                    email: self.email ?? "",
                    phone: self.phone,
-                   pictureURL: self.picture?.medium,
+                   pictureURL: self.picture?.large,
                    thumbnailURL: self.picture?.thumbnail)
     }
 }
