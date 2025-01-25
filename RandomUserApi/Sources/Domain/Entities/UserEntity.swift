@@ -13,7 +13,7 @@ final class UserEntity: Hashable, Identifiable {
     @Attribute(.unique) var id: String
     var name: String
     var surname: String
-    var email: String?
+    var email: String
     var phone: String?
     var pictureURL: String?
     var thumbnailURL: String?
@@ -21,7 +21,7 @@ final class UserEntity: Hashable, Identifiable {
     init(id: String,
          name: String,
          surname: String,
-         email: String? = nil,
+         email: String,
          phone: String? = nil,
          pictureURL: String? = nil,
          thumbnailURL: String? = nil) {
@@ -44,9 +44,31 @@ extension User {
         UserEntity(id: UUID().uuidString,
                    name: self.name?.first ?? "",
                    surname: self.name?.last ?? "",
-                   email: self.email,
+                   email: self.email ?? "",
                    phone: self.phone,
                    pictureURL: self.picture?.medium,
                    thumbnailURL: self.picture?.thumbnail)
+    }
+}
+
+extension Array where Element == UserEntity {
+    mutating func filter(_ value: String) -> [UserEntity] {
+        self.reduce(into: [UserEntity]()) { result, element in
+            if [element.name,
+                element.surname,
+                element.email].compactMap(
+                    {
+                        $0.lowercased()
+                            .trimmingCharacters(in: .whitespaces)
+                            .replacingOccurrences(of: "\\s+", with: "", options: .regularExpression)
+                    }
+                ).joined()
+                .contains(value.lowercased()
+                    .trimmingCharacters(in: .whitespaces)
+                    .replacingOccurrences(of: "\\s+", with: "", options: .regularExpression)
+                ) {
+                result.append(element)
+            }
+        }
     }
 }

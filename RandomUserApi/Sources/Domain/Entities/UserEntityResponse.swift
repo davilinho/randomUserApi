@@ -23,4 +23,8 @@ extension Array where Element == UserEntity {
             }
         }
     }
+
+    mutating func sortByName() {
+        self.sort { $0.name.first ?? Character(" ") < $1.name.first ?? Character(" ") }
+    }
 }
