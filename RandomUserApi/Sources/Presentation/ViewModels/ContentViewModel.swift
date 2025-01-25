@@ -11,6 +11,7 @@ import SwiftUI
 @Observable
 class ContentViewModel {
     private var useCase: ListUsersUseCase
+    private var blackListUseCase: BlacklistUsersUseCase
     private var page: Int = 1
     private var seed: String?
 
@@ -25,8 +26,10 @@ class ContentViewModel {
     var filterText: String = ""
     private var filterTimer: Timer?
 
-    init(useCase: ListUsersUseCase = DefaultUsersUseCase()) {
+    init(useCase: ListUsersUseCase = DefaultUsersUseCase(),
+         blackListUseCase: BlacklistUsersUseCase = DefaultBlacklistUsersUseCase()) {
         self.useCase = useCase
+        self.blackListUseCase = blackListUseCase
     }
 
     func fetchUsers() async {
@@ -66,6 +69,18 @@ class ContentViewModel {
             }
         }
     }
+
+    func addToBlacklist(_ user: UserEntity) {
+        Task {
+            do {
+                try self.blackListUseCase.addToBlacklist(user)
+                self.blacklistUsers.append(user)
+                try await self.fetch()
+            } catch {
+                self.viewState = .error
+            }
+        }
+    }
 }
 
 // MARK: - Private functions
@@ -85,6 +100,9 @@ extension ContentViewModel {
         self.users.append(contentsOf: users)
         self.users.distinct()
         self.users.sortByName()
+        self.users = self.users.filter {
+            !self.blacklistUsers.contains($0)
+        }
         self.filteredUsers = self.users
     }
 

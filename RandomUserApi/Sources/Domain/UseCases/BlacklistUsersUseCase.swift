@@ -29,12 +29,21 @@ class DefaultBlacklistUsersUseCase: BlacklistUsersUseCase {
     }
 
     func addToBlacklist(_ user: UserEntity) throws {
-        let currentBlacklistedUsers = try self.fetchBlackListedUsers()
+        do {
+            let currentBlacklistedUsers = try self.fetchBlackListedUsers()
 
-        if currentBlacklistedUsers.contains(where: { $0 == user }) {
-            throw DomainError.invalidOperation("This user is already blacklisted")
+            if currentBlacklistedUsers.contains(where: { $0 == user }) {
+                throw DomainError.invalidOperation("This user is already blacklisted")
+            }
+
+            try self.repository.addToBlacklist(user)
+        } catch {
+            switch error {
+            case DomainError.notFound:
+                try self.repository.addToBlacklist(user)
+            default:
+                throw error
+            }
         }
-
-        try self.repository.addToBlacklist(user)
     }
 }
