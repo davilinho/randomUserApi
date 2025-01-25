@@ -41,10 +41,8 @@ struct UserRowView: View {
                 Text("\(self.user.name) \(self.user.surname)")
                     .font(.headline)
                     .bold()
-                if let email = self.user.email {
-                    Text(email)
-                        .font(.body)
-                }
+                Text(self.user.email)
+                    .font(.body)
                 if let phone = self.user.phone {
                     Text(phone)
                         .font(.body)

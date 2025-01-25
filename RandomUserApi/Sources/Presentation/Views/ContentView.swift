@@ -21,9 +21,9 @@ struct ContentView: View {
                 case .results:
                     ListUsersView()
                 case .empty:
-                    Text("No results")
+                    EmptyView()
                 case .error:
-                    Text("Error")
+                    ErrorView()
                 }
             }
             .privacySensitive()
@@ -36,18 +36,27 @@ struct ContentView: View {
                     }
                 }
             }
-            .searchable(text: .constant(""))
+            .searchable(text: $viewModel.filterText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Write here to filter results...")
             .navigationTitle("Random User API")
             .environment(viewModel)
         } detail: {
             Text("Select a user to see more details")
                 .font(.title)
         }
-        .onAppear {
-            viewModel.fetchUsers()
+        .task {
+            await viewModel.fetchUsers()
         }
         .refreshable {
-            viewModel.fetchUsers()
+            await viewModel.fetchUsers()
+        }
+        .onChange(of: viewModel.filterText) { oldValue, newValue in
+            Task {
+                guard oldValue != newValue, newValue.count >= 3 else {
+                    await viewModel.fetchUsers()
+                    return
+                }
+                viewModel.filter()
+            }
         }
     }
 

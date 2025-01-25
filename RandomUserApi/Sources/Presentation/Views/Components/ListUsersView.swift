@@ -14,14 +14,14 @@ struct ListUsersView: View {
         @Bindable var viewModel = self.viewModel
 
         List {
-            ForEach(viewModel.users, id: \.id) { user in
+            ForEach(viewModel.filteredUsers, id: \.id) { user in
                 NavigationLink {
                     Text("DETAIL -> \(user.name)")
                 } label: {
                     UserRowView(user: user)
                         .task {
                             guard viewModel.needsFetchMore(user) else { return }
-                            viewModel.fetchUsers()
+                            await viewModel.fetchUsersNextPage()
                         }
                 }
             }
