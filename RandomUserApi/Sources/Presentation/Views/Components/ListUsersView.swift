@@ -16,7 +16,8 @@ struct ListUsersView: View {
         List {
             ForEach(viewModel.filteredUsers, id: \.id) { user in
                 NavigationLink {
-                    Text("DETAIL -> \(user.name)")
+                    DetailView(user: user)
+                        .navigationTitle([user.name, user.surname].joined(separator: " "))
                 } label: {
                     UserRowView(user: user)
                         .task {
