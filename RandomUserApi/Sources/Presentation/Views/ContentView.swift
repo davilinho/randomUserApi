@@ -29,10 +29,12 @@ struct ContentView: View {
             .privacySensitive()
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-
+                    NavigationLink {
+                        BlacklistView()
+                            .navigationTitle("Black List Users")
                     } label: {
-                        Text("Blacklist")
+                        Text("Black List Users")
+                            .foregroundStyle(.black)
                     }
                 }
             }
@@ -43,6 +45,7 @@ struct ContentView: View {
             Text("Select a user to see more details")
                 .font(.title)
         }
+        .accentColor(.black)
         .task {
             await viewModel.fetchUsers()
         }
@@ -56,6 +59,11 @@ struct ContentView: View {
                     return
                 }
                 viewModel.filter()
+            }
+        }
+        .onChange(of: viewModel.blacklistUsers) { _, newValue in
+            newValue.forEach {
+                print("\($0.name)")
             }
         }
     }

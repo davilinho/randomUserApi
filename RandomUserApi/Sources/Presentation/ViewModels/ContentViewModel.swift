@@ -31,7 +31,11 @@ class ContentViewModel {
         self.useCase = useCase
         self.blackListUseCase = blackListUseCase
     }
+}
 
+// MARK: - Users
+
+extension ContentViewModel {
     func fetchUsers() async {
         do {
             try await self.fetch()
@@ -69,13 +73,29 @@ class ContentViewModel {
             }
         }
     }
+}
 
+// MARK: - Black list
+
+extension ContentViewModel {
     func addToBlacklist(_ user: UserEntity) {
         Task {
             do {
                 try self.blackListUseCase.addToBlacklist(user)
                 self.blacklistUsers.append(user)
                 try await self.fetch()
+            } catch {
+                self.viewState = .error
+            }
+        }
+    }
+
+    func fetchBlacklist() {
+        Task {
+            do {
+                self.blacklistUsers = try self.blackListUseCase.fetchBlackListedUsers()
+                self.blacklistUsers.distinct()
+                self.blacklistUsers.sortByName()
             } catch {
                 self.viewState = .error
             }
