@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class UserEntity: Hashable, Identifiable {
+final class UserEntity: Hashable, Identifiable, @unchecked Sendable {
     @Attribute(.unique) var id: String
     var name: String
     var surname: String

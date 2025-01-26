@@ -72,3 +72,7 @@ struct DetailView: View {
         }
     }
 }
+
+#Preview {
+    DetailView(user: expectedUserEntity)
+}

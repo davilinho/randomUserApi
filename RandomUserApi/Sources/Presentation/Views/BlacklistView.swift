@@ -23,3 +23,8 @@ struct BlacklistView: View {
         }
     }
 }
+
+#Preview {
+    BlacklistView()
+        .environment(ContentViewModel())
+}

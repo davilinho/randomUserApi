@@ -25,12 +25,12 @@ let expectedUser = User(name: User.Name(title: "Mr",
 
 let expectedUserResponse = UserResponse(results: [expectedUser], info: Info(seed: "3213112", results: 1, page: 1, version: "1.2"))
 
-nonisolated(unsafe) let expectedBlacklistEntity = UserEntity(id: "999",
-                                                             name: "Black",
-                                                             surname: "List",
-                                                             email: "black@list.com",
-                                                             phone: "0987654321",
-                                                             pictureURL: "")
+let expectedBlacklistEntity = UserEntity(id: "999",
+                                         name: "Black",
+                                         surname: "List",
+                                         email: "black@list.com",
+                                         phone: "0987654321",
+                                         pictureURL: "")
 
 struct TestModel: Codable, Equatable {
     let id: Int

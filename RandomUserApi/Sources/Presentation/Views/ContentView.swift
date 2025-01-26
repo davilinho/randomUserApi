@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var viewModel = ContentViewModel()
+    @State var viewModel = ContentViewModel()
 
     var body: some View {
         @Bindable var viewModel = self.viewModel
@@ -28,17 +28,13 @@ struct ContentView: View {
             }
             .privacySensitive()
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        BlacklistView()
-                            .navigationTitle("Black List Users")
-                    } label: {
-                        Text("Black List Users")
-                            .foregroundStyle(.black)
-                    }
+                if viewModel.hasBlacklistedUsers {
+                    self.toolbar
                 }
             }
-            .searchable(text: $viewModel.filterText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Write here to filter results...")
+            .searchable(text: $viewModel.filterText,
+                        placement: .navigationBarDrawer(displayMode: .automatic),
+                        prompt: "Write here to filter results...")
             .navigationTitle("Random User API")
             .environment(viewModel)
         } detail: {
@@ -48,6 +44,8 @@ struct ContentView: View {
         .accentColor(.black)
         .task {
             await viewModel.fetchUsers()
+        }.onAppear {
+            viewModel.fetchBlacklist()
         }
         .refreshable {
             await viewModel.fetchUsers()
@@ -61,9 +59,19 @@ struct ContentView: View {
                 viewModel.filter()
             }
         }
-        .onChange(of: viewModel.blacklistUsers) { _, newValue in
-            newValue.forEach {
-                print("\($0.name)")
+    }
+}
+
+extension ContentView {
+    @ToolbarContentBuilder
+    private var toolbar: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            NavigationLink {
+                BlacklistView()
+                    .navigationTitle("Black List Users")
+            } label: {
+                Text("Black List Users")
+                    .foregroundStyle(.black)
             }
         }
     }
@@ -71,5 +79,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: UserEntity.self, inMemory: true)
 }
