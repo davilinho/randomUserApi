@@ -1,0 +1,34 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "Black List Users" : {
+
+    },
+    "No results found" : {
+
+    },
+    "Random User API" : {
+
+    },
+    "Select a user to see more details" : {
+
+    },
+    "Ups! An error occurred" : {
+
+    },
+    "Write here to filter results..." : {
+
+    }
+  },
+  "version" : "1.0"
+}

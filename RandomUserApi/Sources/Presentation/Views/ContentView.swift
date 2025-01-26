@@ -34,11 +34,11 @@ struct ContentView: View {
             }
             .searchable(text: $viewModel.filterText,
                         placement: .navigationBarDrawer(displayMode: .automatic),
-                        prompt: "Write here to filter results...")
-            .navigationTitle("Random User API")
+                        prompt: String(localized: "Write here to filter results..."))
+            .navigationTitle(String(localized: "Random User API"))
             .environment(viewModel)
         } detail: {
-            Text("Select a user to see more details")
+            Text(String(localized: "Select a user to see more details"))
                 .font(.title)
         }
         .accentColor(.black)
@@ -68,9 +68,9 @@ extension ContentView {
         ToolbarItem(placement: .navigationBarTrailing) {
             NavigationLink {
                 BlacklistView()
-                    .navigationTitle("Black List Users")
+                    .navigationTitle(String(localized: "Black List Users"))
             } label: {
-                Text("Black List Users")
+                Text(String(localized: "Black List Users"))
                     .foregroundStyle(.black)
             }
         }
