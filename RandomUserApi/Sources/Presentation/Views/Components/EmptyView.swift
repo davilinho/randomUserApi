@@ -19,7 +19,7 @@ struct EmptyView: View {
                     .resizable()
                     .scaledToFit()
 
-                Text("No results found")
+                Text(String(localized: "No results found"))
                     .font(.title)
                     .bold()
                     .padding()

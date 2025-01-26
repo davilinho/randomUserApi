@@ -38,7 +38,7 @@ struct UserRowView: View {
                 }
             }
             VStack(alignment: .leading) {
-                Text("\(self.user.name) \(self.user.surname)")
+                Text(String(localized: "\(self.user.name) \(self.user.surname)"))
                     .font(.headline)
                     .bold()
                 Text(self.user.email)

@@ -19,7 +19,7 @@ struct ErrorView: View {
                     .resizable()
                     .scaledToFit()
 
-                Text("Ups! An error occurred")
+                Text(String(localized: "Ups! An error occurred"))
                     .font(.title)
                     .bold()
                     .padding()
