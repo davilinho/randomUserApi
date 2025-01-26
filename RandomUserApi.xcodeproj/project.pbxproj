@@ -34,20 +34,21 @@
 		3992D74E2D4135E60051F96A /* RandomUserApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandomUserApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3992D7582D4135E60051F96A /* RandomUserApiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandomUserApiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3992D79D2D41BAE80051F96A /* RandomUserApi.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RandomUserApi.xctestplan; sourceTree = "<group>"; };
+		39E20D8B2D469A17004D96E9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		3992D7FA2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApi" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Data/Mocks/TestData.swift,
+				Tests/Data/Mocks/TestData.swift,
 			);
 			target = 3992D73B2D4135E40051F96A /* RandomUserApi */;
 		};
 		3992D7FB2D4233950051F96A /* Exceptions for "RandomUserApiTests" folder in "RandomUserApiTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Data/Mocks/TestData.swift,
+				Tests/Data/Mocks/TestData.swift,
 			);
 			target = 3992D74D2D4135E60051F96A /* RandomUserApiTests */;
 		};
@@ -104,6 +105,7 @@
 		3992D7332D4135E30051F96A = {
 			isa = PBXGroup;
 			children = (
+				39E20D8B2D469A17004D96E9 /* Package.swift */,
 				393CD6A92D464C980074C358 /* Launch Screen.storyboard */,
 				3992D79D2D41BAE80051F96A /* RandomUserApi.xctestplan */,
 				3992D73E2D4135E40051F96A /* RandomUserApi */,
