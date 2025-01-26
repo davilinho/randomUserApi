@@ -10,13 +10,26 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
+    # Step 1: Code checkout
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Xcode config
+    - name: Set up Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app
+
+    # Step 3: SPM dependences
+    - name: Resolve Swift Package dependencies
+      run: swift package resolve
+
+    # Step 4: Build project
     - name: Build
-      run: swift build -v
+      run: swift build --enable-test-discovery
+
+    # Step 5: Test execution
     - name: Run tests
-      run: swift test -v
+      run: swift test --enable-test-discovery
