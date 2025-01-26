@@ -28,6 +28,11 @@ As the main architecture of the project, we have used the MVVM pattern.
 
 Unit tests are tests of isolated components or business logic using mock objects. Therefore, as a general basis, at the very least every view model, use case, repository and datasource should include unit tests when using the MVVM architecture. 
 
+### Disclaimer:
+          There are some tests on this suite, that're disabled, by a known issue in XCode 16:
+          https://forums.swift.org/t/fatal-error-internal-inconsistency-no-test-reporter-for-test-case-argumentids/75666
+          on this test time, I have'nt been not enought time to find any solution
+
 ## Branching strategy
 
 In order to illustrate our usage of good practices in Git, we used a variant of [GitFlow]([https://datasift.github.io/gitflow/IntroducingGitFlow.html](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)) during this assignment. In pure GitFlow, a feature is implemented in a single branch named `feature/name-of-feature`.
